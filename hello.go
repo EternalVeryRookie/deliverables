@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"deliverables/procon/search"
+	"fmt"
+)
 
 func main() {
-	fmt.Println("Hello World！")
+	list := make([]int, 10)
+	for i := range list {
+		list[i] = i
+	}
+
+	index := search.LinearSearchBanhei(list, 22)
+	fmt.Printf("%d\n", index)
 }
