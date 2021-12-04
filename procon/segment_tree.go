@@ -60,6 +60,7 @@ func convertLengthMin2PowersMoreThan(arr []uint64, padding uint64) []uint64 {
 	return retArr
 }
 
+//重複している領域を計算する。重複していない場合はnilをreturnする。
 func duplicateRange(x, y Range) *Range {
 	if x.start <= y.start {
 		if x.start+x.length <= y.start {
@@ -70,6 +71,7 @@ func duplicateRange(x, y Range) *Range {
 		if y.length < length {
 			length = y.length
 		}
+
 		return &Range{
 			start:  y.start,
 			length: length,
@@ -95,7 +97,6 @@ func (r Range) isEqual(src Range) bool {
 }
 
 type ISegmentNode interface {
-	computeSolution(func(x, y uint64) uint64)
 	getSolution() uint64
 	getRange() Range
 }
@@ -196,6 +197,11 @@ func NewSegmentTreeUint64(monoid monoidUint64, src []uint64) *SegmentTree {
 
 func (t *SegmentTree) Set(value uint64, index int) {
 	t.leafs[index].setValue(value, t.monoid.operate)
+}
+
+func (t *SegmentTree) Add(value uint64, index int) {
+	newValue := value + t.leafs[index].value
+	t.leafs[index].setValue(newValue, t.monoid.operate)
 }
 
 func (t *SegmentTree) Get(index int) uint64 {

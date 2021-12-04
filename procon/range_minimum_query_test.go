@@ -110,12 +110,18 @@ func TestRsqBySegmentTree(t *testing.T) {
 		c <- struct{}{}
 		wait.Add(1)
 		go func(testIndex int) {
-			defer wait.Done()
+			defer func() {
+				<-c
+				wait.Done()
+			}()
+
 			arr := make([]uint64, 100000)
 			tree := NewSegmentTreeUint64(newSumOperateMonoid(), arr)
 			for i := range arr {
-				arr[i] = rand.Uint64()
-				tree.Set(arr[i], i)
+				newValue := rand.Uint64()
+				tree.Set(0, i)
+				arr[i] = newValue
+				tree.Add(newValue, i)
 			}
 
 			start := rand.Intn(len(arr))
@@ -126,7 +132,6 @@ func TestRsqBySegmentTree(t *testing.T) {
 			if want != actual {
 				t.Errorf("test patter %d, want: %d, actual: %d", testIndex, want, actual)
 			}
-			<-c
 		}(testIndex)
 	}
 
