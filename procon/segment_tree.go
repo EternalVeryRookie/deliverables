@@ -23,6 +23,15 @@ func newMinOperateMonoid() monoidUint64 {
 	}
 }
 
+func newSumOperateMonoid() monoidUint64 {
+	return monoidUint64{
+		operate: func(x, y uint64) uint64 {
+			return x + y
+		},
+		identityElement: 0,
+	}
+}
+
 //n以上の中で最小の2^kの値を出力
 func calcMin2PowersMoreThan(n uint64) uint64 {
 	i := 1
@@ -187,6 +196,10 @@ func NewSegmentTreeUint64(monoid monoidUint64, src []uint64) *SegmentTree {
 
 func (t *SegmentTree) Set(value uint64, index int) {
 	t.leafs[index].setValue(value, t.monoid.operate)
+}
+
+func (t *SegmentTree) Get(index int) uint64 {
+	return t.leafs[index].value
 }
 
 func (t *SegmentTree) Query(query Range) uint64 {

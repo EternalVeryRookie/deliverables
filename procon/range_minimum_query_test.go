@@ -82,7 +82,47 @@ func TestRmqBySegmentTree(t *testing.T) {
 			queryRange := Range{start: start, length: rand.Intn(len(arr) - start + 1)}
 
 			want := linearMinSearch(arr, queryRange.start, queryRange.start+queryRange.length)
-			actual := tree.Find(queryRange)
+			actual := tree.Query(queryRange)
+			if want != actual {
+				t.Errorf("test patter %d, want: %d, actual: %d", testIndex, want, actual)
+			}
+			<-c
+		}(testIndex)
+	}
+
+	wait.Wait()
+}
+
+func linearSum(arr []uint64, start, end int) uint64 {
+	var sum uint64 = 0
+	for i := start; i < end; i++ {
+		sum += arr[i]
+	}
+
+	return sum
+}
+
+func TestRsqBySegmentTree(t *testing.T) {
+	maxGoroutine := runtime.NumCPU()
+	c := make(chan struct{}, maxGoroutine)
+	var wait sync.WaitGroup
+	for testIndex := range make([]struct{}, 300) {
+		c <- struct{}{}
+		wait.Add(1)
+		go func(testIndex int) {
+			defer wait.Done()
+			arr := make([]uint64, 100000)
+			tree := NewSegmentTreeUint64(newSumOperateMonoid(), arr)
+			for i := range arr {
+				arr[i] = rand.Uint64()
+				tree.Set(arr[i], i)
+			}
+
+			start := rand.Intn(len(arr))
+			queryRange := Range{start: start, length: rand.Intn(len(arr) - start + 1)}
+
+			want := linearSum(arr, queryRange.start, queryRange.start+queryRange.length)
+			actual := tree.Query(queryRange)
 			if want != actual {
 				t.Errorf("test patter %d, want: %d, actual: %d", testIndex, want, actual)
 			}
