@@ -189,7 +189,7 @@ func (t *SegmentTree) Set(value uint64, index int) {
 	t.leafs[index].setValue(value, t.monoid.operate)
 }
 
-func (t *SegmentTree) Find(query Range) uint64 {
+func (t *SegmentTree) Query(query Range) uint64 {
 	type subquery struct {
 		n ISegmentNode
 		q Range
