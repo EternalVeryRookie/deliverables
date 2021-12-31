@@ -1,0 +1,38 @@
+[
+  {
+    "capacity": 5,
+    "input": [
+      {
+        "value": 4,
+        "weight": 2
+      },
+      {    
+        "value": 5, 
+        "weight": 2
+      },
+      {
+        "value": 2, 
+        "weight": 1
+      },
+      {
+        "value": 8, 
+        "weight": 3
+      }
+    ],
+    "want": 13
+  },
+  {
+    "capacity": 20,
+    "input": [
+      {
+        "value": 5,
+        "weight": 9
+      },
+      {
+        "value": 4,
+        "weight": 10
+      }
+    ],
+    "want": 9
+  }
+]
