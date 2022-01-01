@@ -22,17 +22,20 @@ func solveWithMemo(articles []article, i int, capacity int, memo [][]int) int {
 		return 0
 	}
 
-	a := memo[i][capacity]
-	if a < 0 && articles[i].Weight <= capacity {
-		a = solveWithMemo(articles, i+1, capacity-articles[i].Weight, memo) + articles[i].Value
-		memo[i][capacity] = a
+	if memo[i][capacity] < 0 {
+		a := -1
+		if articles[i].Weight <= capacity {
+			a = solveWithMemo(articles, i+1, capacity-articles[i].Weight, memo) + articles[i].Value
+		}
+
+		b := solveWithMemo(articles, i+1, capacity, memo)
+
+		if a < b {
+			memo[i][capacity] = b
+		} else {
+			memo[i][capacity] = a
+		}
 	}
 
-	b := solveWithMemo(articles, i+1, capacity, memo)
-
-	if a > b {
-		return a
-	} else {
-		return b
-	}
+	return memo[i][capacity]
 }
