@@ -42,6 +42,6 @@ func TestKnapsackPerformance(t *testing.T) {
 	now := time.Now()
 	solveKnapsack(articles, capacity)
 	if time.Since(now).Milliseconds() > threshold*1000 {
-		//t.Errorf("実行時間が%d秒を超えました", threshold)
+		t.Errorf("実行時間が%d秒を超えました", threshold)
 	}
 }
