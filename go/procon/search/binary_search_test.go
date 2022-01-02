@@ -44,13 +44,13 @@ func TestBisect(t *testing.T) {
 	}
 
 	actual = BinarySearch(slice, math.MaxInt64)
-	if actual != len(slice) {
-		t.Errorf("want: %d, actual: %d", len(slice), actual)
+	if actual != len(slice)-1 {
+		t.Errorf("want: %d, actual: %d", len(slice)-1, actual)
 	}
 
 	slice[len(slice)-1] = math.MaxInt64
 	actual = BinarySearch(slice, slice[len(slice)-2]+1)
-	if actual != len(slice)-1 {
+	if actual != len(slice)-2 {
 		t.Errorf("want: %d, actual: %d", len(slice)-1, actual)
 	}
 
