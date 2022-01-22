@@ -1,0 +1,37 @@
+[
+  {
+    "S1": "",
+    "S2": "",
+    "Want": 0
+  },
+  {
+    "S1": "abcdefg",
+    "S2": "",
+    "Want": 7
+  },
+  {
+    "S1": "",
+    "S2": "hijklmnopqr",
+    "Want": 11
+  },
+  {
+    "S1": "vintner",
+    "S2": "writers",
+    "Want": 5
+  },
+  {
+    "S1": "acac",
+    "S2": "acm",
+    "Want": 2
+  },
+  {
+    "S1": "icpc",
+    "S2": "icpc",
+    "Want": 0
+  },
+  {
+    "S1": "shimycolors",
+    "S2": "shinycolors",
+    "Want": 1
+  }
+]
